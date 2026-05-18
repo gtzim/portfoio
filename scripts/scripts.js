@@ -5,6 +5,11 @@ const resultadoQuiz = document.getElementById("resultado-quiz");
 const btnVisual = document.getElementById("btn-visual");
 const btnLogica = document.getElementById("btn-logica");
 
+// Elementos da seção de tecnologias
+const btnJava = document.getElementById("btn-java");
+const btnPython = document.getElementById("btn-python");
+const resultadoTech = document.getElementById("resultado-tech");
+
 const meuNome = "Gustavo Henrique";
 const tituloProfissional = "Desenvolvedor de Sistemas";
 const minhaBio = "Estudante de Desenvolvimento de Sistemas, apaixonado por tecnologia e inovação, sempre em busca de aprender algo novo.";
@@ -45,16 +50,8 @@ function exibirTempoRestante() {
 
   atualizarTexto(
     "temporRestante",
-    `Tempo restante para formatura: ${anos} ano(s)`
+    `Tempo restante para formatura: ${anos} ano(s), ${meses} mês(es) e ${dias} dia(s)`
   );
-}
-
-function obterDiaSemana() {
-  const diasSemana = [
-    "Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira",
-    "Quinta-feira", "Sexta-feira", "Sábado"
-  ];
-  return diasSemana[hoje.getDay()];
 }
 
 function estilizarResultadoQuiz(cor) {
@@ -62,7 +59,7 @@ function estilizarResultadoQuiz(cor) {
   resultadoQuiz.style.padding = "12px";
   resultadoQuiz.style.borderRadius = "8px";
   resultadoQuiz.style.marginTop = "10px";
-  resultadoQuiz.style.color = "#000";
+  resultadoQuiz.style.color = "#111111"; // Mudado para contraste legível sobre fundos claros
 }
 
 function mostrarResultadoQuiz(tipo) {
@@ -77,7 +74,7 @@ function mostrarResultadoQuiz(tipo) {
       <strong>⚙️ Você tem perfil Back-End!</strong><br>
       Você curte lógica e resolução de problemas.
     `;
-    estilizarResultadoQuiz("#33b172");
+    estilizarResultadoQuiz("#d1f2e1");
   }
 }
 
@@ -92,6 +89,9 @@ function exibirPerfil() {
 }
 
 function listarHabilidades() {
+  const listaHabilidadesContainer = document.getElementById("lista-habilidades");
+  if (!listaHabilidadesContainer) return;
+
   const habilidades = [
     "Agilidade em pedidos", "Bom em comunicação", "Fácil em aprendizado",
     "Java", "Python", "HTML", "CSS", "JS"
@@ -102,11 +102,14 @@ function listarHabilidades() {
     const tipo = hardSkills.includes(habilidade) ? "Hard Skill" : "Soft Skill";
     const p = document.createElement("p");
     p.textContent = `🎯 ${habilidade} (${tipo})`;
-    document.body.appendChild(p);
+    listaHabilidadesContainer.appendChild(p); // Inserido no local correto do HTML
   });
 }
 
 function listarProjetos() {
+  const projetosContainer = document.getElementById("projetos");
+  if (!projetosContainer) return;
+
   const projetos = [
     {
       nome: "Aplicação de Estacionamento",
@@ -122,16 +125,31 @@ function listarProjetos() {
 
   projetos.forEach(projeto => {
     const container = document.createElement("div");
+    container.className = "projeto-card";
     container.innerHTML = `
-      <h2>💻 ${projeto.nome}</h2>
+      <h3>💻 ${projeto.nome}</h3>
       <p><strong>Tecnologias:</strong> ${projeto.tecnologias.join(", ")}</p>
       <p><strong>Conhecimentos:</strong> ${projeto.conhecimentos}</p>
       <hr>
     `;
-    document.body.appendChild(container);
+    projetosContainer.appendChild(container); 
   });
 }
 
+// Lógica dos botões de tecnologias favoritas
+if (btnJava) {
+  btnJava.addEventListener("click", () => {
+    resultadoTech.innerHTML = "<p>☕ <strong>Java:</strong> Muito foda, também gosto muito</p>";
+  });
+}
+
+if (btnPython) {
+  btnPython.addEventListener("click", () => {
+    resultadoTech.innerHTML = "<p>🐍 <strong>Python:</strong> Ainda prefiro o Java</p>";
+  });
+}
+
+// Event Listeners do Quiz
 if (btnVisual) {
   btnVisual.addEventListener("click", () => {
     pontosFront++;
@@ -155,9 +173,11 @@ if (botaoModo) {
   });
 }
 
+// Inicialização dos dados na tela
 atualizarTexto("meuNome", meuNome);
 atualizarTexto("tituloProfissional", tituloProfissional);
 atualizarTexto("minhaBio", minhaBio);
+atualizarTexto("anoFormatura", `Previsão de Formatura: ${dataFormatura.toLocaleDateString('pt-BR')}`);
 
 exibirTempoRestante();
 listarHabilidades();
