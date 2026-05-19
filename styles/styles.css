@@ -148,13 +148,30 @@ button:hover {
     border-radius: 8px;
     margin-bottom: 0; 
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.9------;
     color: var(--text-primary);
     transition: border-color 0.2s;
 }
 
 #lista-habilidades p:hover {
     border-color: var(--accent); 
+}
+
+#busca-projeto {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+#busca-projeto:focus {
+    outline: none;
+    border-color: var(--accent);
 }
 
 #projetos .projeto-card {

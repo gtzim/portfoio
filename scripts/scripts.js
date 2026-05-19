@@ -4,8 +4,6 @@ const botaoModo = document.getElementById("modoClaroEscuro");
 const resultadoQuiz = document.getElementById("resultado-quiz");
 const btnVisual = document.getElementById("btn-visual");
 const btnLogica = document.getElementById("btn-logica");
-
-// Elementos da seção de tecnologias
 const btnJava = document.getElementById("btn-java");
 const btnPython = document.getElementById("btn-python");
 const resultadoTech = document.getElementById("resultado-tech");
@@ -19,6 +17,19 @@ const hoje = new Date();
 
 let pontosFront = 0;
 let pontosBack = 0;
+
+const projetos = [
+  {
+    nome: "Aplicação de Estacionamento",
+    tecnologias: ["Python", "Tkinter", "fpdf"],
+    conhecimentos: "VSCode, GitHub, pip, PyInstaller"
+  },
+  {
+    nome: "Aplicação de Caixa Eletrônico",
+    tecnologias: ["Java", "SQL"],
+    conhecimentos: "IntelliJ, SQLite, GitHub"
+  }
+];
 
 function atualizarTexto(id, texto) {
   const elemento = document.getElementById(id);
@@ -59,21 +70,15 @@ function estilizarResultadoQuiz(cor) {
   resultadoQuiz.style.padding = "12px";
   resultadoQuiz.style.borderRadius = "8px";
   resultadoQuiz.style.marginTop = "10px";
-  resultadoQuiz.style.color = "#111111"; // Mudado para contraste legível sobre fundos claros
+  resultadoQuiz.style.color = "#111111"; 
 }
 
 function mostrarResultadoQuiz(tipo) {
   if (tipo === "front") {
-    resultadoQuiz.innerHTML = `
-      <strong>🎨 Você tem perfil Front-End!</strong><br>
-      Você curte interfaces e experiência visual.
-    `;
+    resultadoQuiz.innerHTML = `<strong>🎨 Você tem perfil Front-End!</strong><br>Você curte interfaces e experiência visual.`;
     estilizarResultadoQuiz("#e8f4fd");
   } else {
-    resultadoQuiz.innerHTML = `
-      <strong>⚙️ Você tem perfil Back-End!</strong><br>
-      Você curte lógica e resolução de problemas.
-    `;
+    resultadoQuiz.innerHTML = `<strong>⚙️ Você tem perfil Back-End!</strong><br>Você curte lógica e resolução de problemas.`;
     estilizarResultadoQuiz("#d1f2e1");
   }
 }
@@ -98,45 +103,35 @@ function listarHabilidades() {
   ];
   const hardSkills = ["Java", "Python", "HTML", "CSS", "JS"];
 
+  listaHabilidadesContainer.innerHTML = "";
+
   habilidades.forEach(habilidade => {
     const tipo = hardSkills.includes(habilidade) ? "Hard Skill" : "Soft Skill";
     const p = document.createElement("p");
     p.textContent = `🎯 ${habilidade} (${tipo})`;
-    listaHabilidadesContainer.appendChild(p); // Inserido no local correto do HTML
+    listaHabilidadesContainer.appendChild(p); 
   });
 }
 
-function listarProjetos() {
-  const projetosContainer = document.getElementById("projetos");
-  if (!projetosContainer) return;
+function listarProjetos(listaDeProjetos) {
+  const container = document.getElementById("lista-projetos-container");
+  if (!container) return;
 
-  const projetos = [
-    {
-      nome: "Aplicação de Estacionamento",
-      tecnologias: ["Python", "Tkinter", "fpdf"],
-      conhecimentos: "VSCode, GitHub, pip, PyInstaller"
-    },
-    {
-      nome: "Aplicação de Caixa Eletrônico",
-      tecnologias: ["Java", "SQL"],
-      conhecimentos: "IntelliJ, SQLite, GitHub"
-    }
-  ];
+  container.innerHTML = "";
 
-  projetos.forEach(projeto => {
-    const container = document.createElement("div");
-    container.className = "projeto-card";
-    container.innerHTML = `
+  listaDeProjetos.forEach(projeto => {
+    const card = document.createElement("div");
+    card.className = "projeto-card";
+    card.innerHTML = `
       <h3>💻 ${projeto.nome}</h3>
       <p><strong>Tecnologias:</strong> ${projeto.tecnologias.join(", ")}</p>
       <p><strong>Conhecimentos:</strong> ${projeto.conhecimentos}</p>
       <hr>
     `;
-    projetosContainer.appendChild(container); 
+    container.appendChild(card); 
   });
 }
 
-// Lógica dos botões de tecnologias favoritas
 if (btnJava) {
   btnJava.addEventListener("click", () => {
     resultadoTech.innerHTML = "<p>☕ <strong>Java:</strong> Muito foda, também gosto muito</p>";
@@ -149,7 +144,6 @@ if (btnPython) {
   });
 }
 
-// Event Listeners do Quiz
 if (btnVisual) {
   btnVisual.addEventListener("click", () => {
     pontosFront++;
@@ -169,11 +163,22 @@ if (btnLogica) {
 if (botaoModo) {
   botaoModo.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
-    console.log("Modo de cor alternado!");
   });
 }
 
-// Inicialização dos dados na tela
+const inputBusca = document.getElementById("busca-projeto");
+if (inputBusca) {
+  inputBusca.addEventListener("input", (evento) => {
+    const termo = evento.target.value.toLowerCase();
+    const projetosFiltrados = projetos.filter(projeto => {
+      const nomeMatch = projeto.nome.toLowerCase().includes(termo);
+      const techMatch = projeto.tecnologias.join(" ").toLowerCase().includes(termo);
+      return nomeMatch || techMatch;
+    });
+    listarProjetos(projetosFiltrados);
+  });
+}
+
 atualizarTexto("meuNome", meuNome);
 atualizarTexto("tituloProfissional", tituloProfissional);
 atualizarTexto("minhaBio", minhaBio);
@@ -181,4 +186,4 @@ atualizarTexto("anoFormatura", `Previsão de Formatura: ${dataFormatura.toLocale
 
 exibirTempoRestante();
 listarHabilidades();
-listarProjetos();
+listarProjetos(projetos);
