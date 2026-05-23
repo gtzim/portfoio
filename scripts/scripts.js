@@ -1,5 +1,6 @@
 'use strict';
 
+// Elements da DOM
 const botaoModo = document.getElementById("modoClaroEscuro");
 const resultadoQuiz = document.getElementById("resultado-quiz");
 const btnVisual = document.getElementById("btn-visual");
@@ -7,17 +8,22 @@ const btnLogica = document.getElementById("btn-logica");
 const btnJava = document.getElementById("btn-java");
 const btnPython = document.getElementById("btn-python");
 const resultadoTech = document.getElementById("resultado-tech");
+const inputBusca = document.getElementById("busca-projeto");
 
+// Informações Pessoais
 const meuNome = "Gustavo Henrique";
 const tituloProfissional = "Desenvolvedor de Sistemas";
 const minhaBio = "Estudante de Desenvolvimento de Sistemas, apaixonado por tecnologia e inovação, sempre em busca de aprender algo novo.";
 
+// Datas do Curso
 const dataFormatura = new Date(2026, 11, 31); 
 const hoje = new Date();
 
+// Pontuação do Quiz
 let pontosFront = 0;
 let pontosBack = 0;
 
+// Lista de Projetos Estáticos
 const projetos = [
   {
     nome: "Aplicação de Estacionamento",
@@ -30,6 +36,12 @@ const projetos = [
     conhecimentos: "IntelliJ, SQLite, GitHub"
   }
 ];
+
+
+
+// ==========================================
+// --- Funções Auxiliares e Lógica de Interface ---
+// ==========================================
 
 function atualizarTexto(id, texto) {
   const elemento = document.getElementById(id);
@@ -65,8 +77,63 @@ function exibirTempoRestante() {
   );
 }
 
+const btnMasterizar = document.getElementById("btn-masterizar");
+const audioInput = document.getElementById("audio-input");
+const statusMasterizacao = document.getElementById("status-masterizacao");
+
+if (btnMasterizar) {
+  btnMasterizar.addEventListener("click", async () => {
+
+    const arquivo = audioInput.files[0];
+
+    if (!arquivo) {
+      statusMasterizacao.innerText = "Selecione um áudio primeiro.";
+      return;
+    }
+
+    statusMasterizacao.innerText = "Enviando áudio...";
+
+    const formData = new FormData();
+    formData.append("audio", arquivo);
+
+    try {
+      const resposta = await fetch("http://localhost:3000/masterizar", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!resposta.ok) {
+        throw new Error("Erro na masterização");
+      }
+
+      statusMasterizacao.innerText = "Masterização concluída.";
+
+      const blob = await resposta.blob();
+
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "audio-masterizado.wav";
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+    } catch (erro) {
+  console.error("ERRO FRONT:");
+  console.error(erro);
+
+  statusMasterizacao.innerText =
+    "Erro: " + erro.message;
+}
+  });
+}
+
 function estilizarResultadoQuiz(cor) {
-  resultadoQuiz.style.backgroundColor = cor;
+  if (!resultadoQuiz) return;
+  // Correção: a variável 'cor' passada como parâmetro estava sendo chamada como 'color'
+  resultadoQuiz.style.backgroundColor = cor; 
   resultadoQuiz.style.padding = "12px";
   resultadoQuiz.style.borderRadius = "8px";
   resultadoQuiz.style.marginTop = "10px";
@@ -74,6 +141,7 @@ function estilizarResultadoQuiz(cor) {
 }
 
 function mostrarResultadoQuiz(tipo) {
+  if (!resultadoQuiz) return;
   if (tipo === "front") {
     resultadoQuiz.innerHTML = `<strong>🎨 Você tem perfil Front-End!</strong><br>Você curte interfaces e experiência visual.`;
     estilizarResultadoQuiz("#e8f4fd");
@@ -132,6 +200,9 @@ function listarProjetos(listaDeProjetos) {
   });
 }
 
+
+// --- Event Listeners ---
+
 if (btnJava) {
   btnJava.addEventListener("click", () => {
     resultadoTech.innerHTML = "<p>☕ <strong>Java:</strong> Muito foda, também gosto muito</p>";
@@ -166,7 +237,6 @@ if (botaoModo) {
   });
 }
 
-const inputBusca = document.getElementById("busca-projeto");
 if (inputBusca) {
   inputBusca.addEventListener("input", (evento) => {
     const termo = evento.target.value.toLowerCase();
@@ -178,6 +248,13 @@ if (inputBusca) {
     listarProjetos(projetosFiltrados);
   });
 }
+
+{
+  "scripts"; {
+    "start"; "node server.js"
+  }
+}
+// --- Inicialização da Página ---
 
 atualizarTexto("meuNome", meuNome);
 atualizarTexto("tituloProfissional", tituloProfissional);
