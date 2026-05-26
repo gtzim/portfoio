@@ -1,0 +1,509 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-body: #07110d;
+    --bg-card: rgba(15, 23, 20, 0.75);
+
+    --text-primary: #ffffff;
+    --text-secondary: #9ca3af;
+
+    --accent: #00ff88;
+    --accent-hover: #00cc6d;
+
+    --border-color: rgba(255,255,255,0.08);
+
+    --glass: blur(14px);
+}
+
+body {
+    min-height: 100vh;
+    padding: 40px 20px;
+
+    background: var(--bg-body);
+    color: var(--text-primary);
+
+    font-family: "Poppins", sans-serif;
+
+    overflow-x: hidden;
+
+    transition:
+        background 0.4s ease,
+        color 0.4s ease;
+}
+body.dark-mode {
+    --bg-body: #050816;
+    --bg-card: rgba(15, 23, 20, 0.75);
+
+    --text-primary: #ffffff;
+    --text-secondary: #9ca3af;
+
+    --accent: #00ff88;
+    --accent-hover: #00cc6d;
+
+    --border-color: rgba(255,255,255,0.08);
+}
+
+/* TEMA CLARO */
+body:not(.dark-mode) {
+    --bg-body: #f4f7fb;
+    --bg-card: rgba(255,255,255,0.75);
+
+    --text-primary: #111827;
+    --text-secondary: #4b5563;
+
+    --accent: #00b86b;
+    --accent-hover: #00995a;
+
+    --border-color: rgba(0,0,0,0.08);
+}
+/* efeito animado no fundo */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(0,255,136,0.03),
+            transparent
+        );
+
+    animation: brilho 8s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes brilho {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* CONTAINER */
+.container {
+    max-width: 920px;
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* espaço ENTRE os cards */
+}
+/* SEÇÕES */
+section {
+    position: relative;
+
+    background: var(--bg-card);
+
+    padding: 28px;
+
+    border-radius: 22px;
+
+    border: 1px solid rgba(0,255,136,0.18);
+
+    backdrop-filter: var(--glass);
+
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04) inset,
+        0 0 18px rgba(0,255,136,0.08),
+        0 10px 30px rgba(0,0,0,0.25);
+
+    transition: 0.35s ease;
+}
+
+section:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(0,255,136,0.35);
+
+    box-shadow:
+        0 0 0 1px rgba(0,255,136,0.18) inset,
+        0 0 24px rgba(0,255,136,0.12),
+        0 12px 35px rgba(0,0,0,0.35);
+}
+
+/* TITULOS */
+h1 {
+    margin-bottom: 14px;
+    line-height: 1.1;
+}
+
+h2 {
+    margin-bottom: 14px;
+}
+
+/* TEXTOS */
+p {
+    line-height: 1.7;
+}
+
+/* HABILIDADES */
+#lista-habilidades {
+    gap: 14px;
+    margin-top: 18px;
+}
+
+#lista-habilidades p {
+    padding: 14px 20px;
+
+    font-size: 0.95rem;
+}
+
+/* PROJETOS */
+#projetos .projeto-card {
+    padding: 20px;
+    margin-bottom: 16px;
+}
+
+/* FRASE */
+#frase {
+    padding: 20px;
+    margin-top: 20px;
+}
+/* BOTÕES */
+button {
+    background: linear-gradient(
+        135deg,
+        #00ff88,
+        #00bfff
+    );
+
+    color: #04110c;
+
+    border: none;
+
+    padding: 14px 24px;
+
+    border-radius: 14px;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    box-shadow:
+        0 0 12px rgba(0,255,136,0.25);
+}
+
+button:hover {
+    transform: translateY(-3px) scale(1.03);
+
+    box-shadow:
+        0 0 20px rgba(0,255,136,0.45),
+        0 0 40px rgba(0,191,255,0.25);
+}
+
+/* INPUT */
+#busca-projeto {
+
+    padding: 14px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    background: rgba(255,255,255,0.04);
+
+    color: white;
+
+    outline: none;
+
+    transition: 0.3s;
+}
+
+#busca-projeto:focus {
+    border-color: #00ff88;
+
+    box-shadow:
+        0 0 10px rgba(0,255,136,0.3);
+}
+
+/* CARDS PROJETOS */
+#projetos .projeto-card {
+    padding: 22px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.03),
+            rgba(255,255,255,0.01)
+        );
+
+    border: 1px solid rgba(255,255,255,0.05);
+
+    transition: 0.3s;
+
+    margin-bottom: 18px;
+}
+
+#projetos .projeto-card:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(0,255,136,0.3);
+
+    box-shadow:
+        0 0 20px rgba(0,255,136,0.12);
+}
+
+#projetos .projeto-card h3 {
+    color: white;
+
+    margin-bottom: 10px;
+
+    font-size: 1.3rem;
+}
+
+/* HABILIDADES */
+/* ÁREA HABILIDADES */
+/* HABILIDADES */
+#lista-habilidades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 25px;
+}
+
+#lista-habilidades p {
+    position: relative;
+
+    padding: 16px 24px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0, 255, 136, 0.12),
+            rgba(0, 191, 255, 0.10)
+        );
+
+    border: 1px solid rgba(0,255,136,0.20);
+
+    color: var(--text-primary);
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    overflow: hidden;
+
+    transition: 0.35s ease;
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 0 15px rgba(0,255,136,0.06);
+}
+
+/* brilho */
+#lista-habilidades p::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: -120%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,0.12),
+            transparent
+        );
+
+    transition: 0.6s;
+}
+
+/* hover */
+#lista-habilidades p:hover {
+    transform: translateY(-6px) scale(1.04);
+
+    border-color: rgba(0,255,136,0.45);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,255,136,0.22),
+            rgba(0,191,255,0.18)
+        );
+
+    box-shadow:
+        0 0 20px rgba(0,255,136,0.18),
+        0 0 40px rgba(0,191,255,0.10);
+}
+
+#lista-habilidades p:hover::before {
+    left: 120%;
+}
+
+/* soft skills */
+#lista-habilidades p:nth-child(-n+3) {
+    border-color: rgba(255, 0, 128, 0.35);
+}
+
+/* hard skills */
+#lista-habilidades p:nth-child(n+4) {
+    border-color: rgba(0,255,136,0.30);
+}/* FRASE */
+#frase {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    font-size: 1.2rem;
+
+    font-weight: 500;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,255,136,0.12),
+            rgba(0,191,255,0.12)
+        );
+
+    border: 1px solid rgba(0,255,136,0.2);
+
+    box-shadow:
+        0 0 20px rgba(0,255,136,0.08);
+
+    animation: fade 0.5s ease;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+}
+
+.social-buttons {
+    display: flex;
+    gap: 16px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 14px 22px;
+
+    border-radius: 16px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    color: white;
+
+    transition: 0.3s ease;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 0 15px rgba(0,0,0,0.25);
+}
+
+/* GITHUB */
+.github {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.08),
+            rgba(255,255,255,0.03)
+        );
+}
+
+.github:hover {
+    transform: translateY(-4px);
+
+    border-color: rgba(255,255,255,0.25);
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.08);
+}
+
+body:not(.dark-mode) #frase {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,255,136,0.22),
+            rgba(0,191,255,0.20)
+        );
+
+    color: #111827;
+
+    border: 1px solid rgba(0,255,136,0.28);
+}
+
+body.dark-mode #frase {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,255,136,0.12),
+            rgba(0,191,255,0.12)
+        );
+
+    color: white;
+}
+
+#toggle-theme {
+    position: fixed;
+
+    top: 20px;
+    right: 20px;
+
+    padding: 10px 18px;
+
+    width: auto;
+
+    border-radius: 12px;
+
+    font-size: 0.9rem;
+
+    z-index: 999;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00ff88,
+            #00bfff
+        );
+
+    color: #04110c;
+
+    box-shadow:
+        0 0 15px rgba(0,255,136,0.25);
+}
+
